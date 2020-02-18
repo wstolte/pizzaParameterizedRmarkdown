@@ -1,0 +1,59 @@
+---
+title: "Factsheet: thema `r params$thema` door `r params$partij`"
+author: "Willem Stolte"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: word_document
+params:
+    id: id
+    partij: ic
+    thema: th
+    project: pr
+    contact_opdrachtgever: cog
+    email1: em1
+    contact_opdrachtnemer: con
+    email2: em2
+    contact_acceptatie: ca
+    email3: em3
+    ervaring: erv
+    specifieke_aandachtspunten: sap
+---
+
+
+# Factsheet thema `r params$thema`
+
+```{r setup, include = F}
+
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	include = FALSE
+)
+library(pander)
+
+```
+
+
+```{r make_table, echo = F, include = T, message=FALSE, warning=FALSE, error=F}
+
+factsheettable <- t(
+  data.frame(
+    Version = format(Sys.time(), '%d %B, %Y'),
+    id = params$id,
+    partij = params$partij,
+    thema = params$thema,
+    project = params$project,
+    contact_opdrachtgever = params$contact_opdrachtgever,
+    email1 = params$email1,
+    contact_opdrachtnemer = params$contact_opdrachtnemer,
+    email2 = params$email2,
+    contact_acceptatie = params$contact_acceptatie,
+    email3 = params$email3,
+    ervaring = params$ervaring,
+    specifieke_aandachtspunten = params$specifieke_aandachtspunten
+  )
+)
+
+knitr::kable(factsheettable)
+
+```
+

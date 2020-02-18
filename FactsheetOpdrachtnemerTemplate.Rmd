@@ -1,0 +1,102 @@
+---
+title: "Factsheet voor uitvoerende partij `r params$name`"
+author: "Deltares, Wageneningen Marine Research and Rijkswaterstaat"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+params:
+  ID                        : id
+  Project                   : pr
+  Thema                   : pe
+  Omschrijving            : om
+  "Aanleverendepartij"     : pa
+  "Aanleverendepartij.code"     : pac
+  "Dataset naam"               : da
+  "Eigenaarschap dataset"             : ei
+  Opgeleverd                : op
+  Doelrepository             : dr
+  "Opdrachtgever contact 1"     : cog1
+  "Opdrachtgever email 1"       : emg1
+  "Opdrachtgever contact 2"     : cog2
+  "Opdrachtgever email 2"       : emg2
+  "Opdrachtnemer contact 1"     : con1
+  "Opdrachtnemer email 1"       : emn1
+  "Opdrachtnemer contact 2"     : con2
+  "Opdrachtnemer email 2"       : emn2
+  "Data acceptatie contact"        : acc
+  "Data acceptatie email"           : eacc
+  "Ervaring opdrachtnemer"                  : erv
+  "Specifieke aandachtspunten": spa
+---
+
+
+# Factsheet contracting party `r params$name`
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+library(pander)
+
+
+```
+
+
+```{r make_table, eval=FALSE, include=FALSE}
+
+set.alignment('left', row.names = 'right')
+
+factsheettable2 <- t(
+  data.frame(
+    `Datum gegenereerd` = format(Sys.time(), '%d %B, %Y'),
+    id = params$id,                        
+    `project` = params$project,
+    `aanleverende partij` = params$Aanleverendepartij,
+    `aanleverende partij code` = params$Aanleverendepartij.code,
+    `perceel` = params$perceel,                   
+    `partij` = params$partij,                    
+    `dataset naam` = params$datasetName,               
+    `eigenaarschap` = params$eigenaarschap,             
+    `aangeleverd` = params$opgeleverd,                
+    `contact opdrachtgever 1` = params$contactOpdrachtgever1,     
+    `email opdrachtgever 1` = params$emailOpdrachtgever1,       
+    `contact opdrachtgever 2` = params$contactOpdrachtgever2,     
+    `email opdrachtgever 2` = params$emailOpdrachtgever2,       
+    `contact opdrachtnemer 1` = params$contactOpdrachtnemer1,     
+    `email opdrachtnemer 1` = params$emailOpdrachtnemer1,       
+    `contact opdrachtnemer 2` = params$contactOpdrachtnemer2,     
+    `email opdrachtnemer 2` = params$emailOpdrachtnemer2,       
+    `contact acceptatie` = params$contact_acceptatie,        
+    `email acceptatie` = params$emailAcceptatie,           
+    `ervaring` = params$ervaring,                  
+    `specifieke aandachtspunten` = params$specifieke_aandachtspunten
+  )
+)
+
+pander::pander(factsheettable2, split.cell = 80, split.table = Inf, align = "left")
+
+```
+
+
+
+```{r make_table2}
+
+set.alignment('left', row.names = 'right')
+
+factsheettable <- data.frame(
+  naam = gsub('\\.', replacement = " ", names(params)),
+  waarde = t(data.frame(params)), 
+  stringsAsFactors = F)
+
+# factsheettable$naam <- 
+row.names(factsheettable) <- NULL
+
+# colnames(factsheettable) <- c('naam', 'waarde')
+
+
+pander::pander(factsheettable, split.cell = 80, split.table = Inf, align = "left")
+
+```
